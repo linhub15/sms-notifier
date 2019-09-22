@@ -1,2 +1,6 @@
+# .NET Core
 bin
 obj
+
+# Node
+node_modules/

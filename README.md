@@ -19,6 +19,11 @@ recieve a text.
 * `dotnet build`
 * `dotnet run`
 
+### Database setup
+* `sudo service mongod start` - start the mongodb service
+* `cd notifier-api/Database`
+* `npm start`
+
 ## end points
 ### AuthController
 #### `POST api/auth/phone-number`
