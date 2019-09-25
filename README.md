@@ -13,13 +13,17 @@ recieve a text.
 * Community members (subscribers) don't need to install an app
 * Community organizers (creators) can use a simple interface for creating and scheduling texts
 
-## setup
+## Setup
 * `git clone https://github.com/linhub15/notifier-api`
 * `cd notifier-api`
+
+### API
 * `dotnet build web-service`
 * `dotnet run -p web-service`
+* https://localhost:5001/swagger/index.html
 
-### Database setup
+### Database
 * `sudo service mongod start` - start the mongodb service
 * `cd notifier-api/Database`
 * `npm start`
+
