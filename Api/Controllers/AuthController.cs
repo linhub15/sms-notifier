@@ -7,6 +7,12 @@ namespace Notifier.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private IAauthenticator _authenticator;
+        public AuthController(IAuthenticator authenticator)
+        {
+            _authenticator = authenticator;
+        }
+
         [HttpGet]
         public IActionResult Get()
         {
@@ -16,6 +22,8 @@ namespace Notifier.Api.Controllers
         [HttpPost("phone-number")]
         public IActionResult PostPhoneNumber([FromBody] string phoneNumber)
         {
+            
+            _authenticator.requestOneTimeCode();
             return Ok();
         }
 
