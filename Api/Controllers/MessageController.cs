@@ -1,24 +1,38 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
-using Notifier.Core.Dtos;
+using Notifier.Core.Entities;
+using Notifier.Core.Interfaces;
 
 namespace Notifier.Api.Controllers
 {
+    [Route("api/messages")]
     [ApiController]
     public class MessageController : ControllerBase
     {
-        [HttpGet("messages")]
+        private readonly IMessageService _messageService;
+        public MessageController(IMessageService messageService)
+        {
+            _messageService = messageService;
+        }
+        
+        [HttpGet]
         public IActionResult Messages()
         {
-            // Get's messages for the given subject token 'sub'
-            return Ok();
+            var messages = _messageService.Get();
+            return Ok(messages);
         }
 
-        [HttpGet("messages/{id:guid}")]
-        public IActionResult OneMessage(Guid id)
+        [HttpGet("{id:length(24)}")]
+        public IActionResult Message(string id)
         {
-            // get's a single message based on message id
-            return Ok();
+            var message = _messageService.Get(id);
+            return Ok(message);
+        }
+
+        [HttpPost]
+        public IActionResult Create(Message message)
+        {
+            _messageService.Create(message);
+            return Ok(message);
         }
     }
 }

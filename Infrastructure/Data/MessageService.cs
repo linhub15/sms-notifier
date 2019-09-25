@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using MongoDB.Driver;
 using Notifier.Core.Entities;
+using Notifier.Core.Interfaces;
 
 namespace Notifier.Infrastructure.Data
 {
-    public class MessageService
+    public class MessageService : IMessageService
     {
         private readonly IMongoCollection<Message> _messages;
         public MessageService()
