@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Notifier.Core.Dtos;
+using Notifier.Core.Interfaces;
 
 namespace Notifier.Api.Controllers
 {
@@ -7,23 +8,16 @@ namespace Notifier.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private IAauthenticator _authenticator;
+        private IAuthenticator _authenticator;
         public AuthController(IAuthenticator authenticator)
         {
             _authenticator = authenticator;
-        }
-
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok("it works");
         }
         
         [HttpPost("phone-number")]
         public IActionResult PostPhoneNumber([FromBody] string phoneNumber)
         {
-            
-            _authenticator.requestOneTimeCode();
+            _authenticator.RequestOneTimeCode(phoneNumber);
             return Ok();
         }
 

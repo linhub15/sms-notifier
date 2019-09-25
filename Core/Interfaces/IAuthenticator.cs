@@ -4,7 +4,7 @@ namespace Notifier.Core.Interfaces
 {
     public interface IAuthenticator
     {
-        string RequestOneTimeCode(string phoneNumber);
+        void RequestOneTimeCode(string phoneNumber);
         string Authenticate(AuthenticateDto dto);
     }
 }
