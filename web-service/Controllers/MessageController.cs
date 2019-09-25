@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Notifier.Core.Entities;
 using Notifier.Core.Interfaces;
 
-namespace Notifier.Api.Controllers
+namespace Notifier.Controllers
 {
     [Route("api/messages")]
     [ApiController]
