@@ -30,6 +30,7 @@ namespace Notifier
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IMessageService, MessageService>();
+            services.AddSingleton<ICommunityService, CommunityService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(c =>
