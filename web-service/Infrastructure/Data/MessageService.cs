@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Notifier.Core.Entities;
 using Notifier.Core.Interfaces;

@@ -37,6 +37,7 @@ namespace Notifier.Controllers
             _messageService.Create(message);
             return Ok(message);
         }
+        
         [HttpPost("send-message")]
         public IActionResult SendMessage()
         {

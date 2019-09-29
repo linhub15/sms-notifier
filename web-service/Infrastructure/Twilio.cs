@@ -20,8 +20,7 @@ namespace Notifier.Infrastructure
             var message = MessageResource.Create(
                 body: "Join Earth's mightiest heroes. Like Kevin Bacon.",
                 from: new Twilio.Types.PhoneNumber("+12055767675"),
-                to: new Twilio.Types.PhoneNumber("+17809651451"),
-                
+                to: new Twilio.Types.PhoneNumber("+17809651451")
             );
 
             Console.WriteLine(message.Sid);
