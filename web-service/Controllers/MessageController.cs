@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Notifier.Core.Entities;
 using Notifier.Core.Interfaces;
+using Notifier.Infrastructure;
 
 namespace Notifier.Controllers
 {
@@ -9,9 +10,11 @@ namespace Notifier.Controllers
     public class MessageController : ControllerBase
     {
         private readonly IMessageService _messageService;
+        private readonly SmsApi _smsApi;
         public MessageController(IMessageService messageService)
         {
             _messageService = messageService;
+            _smsApi = new SmsApi();
         }
         
         [HttpGet]
@@ -33,6 +36,12 @@ namespace Notifier.Controllers
         {
             _messageService.Create(message);
             return Ok(message);
+        }
+        [HttpPost("send-message")]
+        public IActionResult SendMessage()
+        {
+            _smsApi.SendMessage();
+            return Ok();
         }
     }
 }
