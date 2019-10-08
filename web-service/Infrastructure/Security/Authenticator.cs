@@ -16,7 +16,7 @@ namespace Notifier.Infrastructure.Security
             // 2. call twilio api
         }
 
-        public string Authenticate(AuthenticateDto dto)
+        public string Authenticate(CredentialsDto dto)
         {
             return "";
         }

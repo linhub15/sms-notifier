@@ -4,7 +4,7 @@ using Notifier.Core.Interfaces;
 
 namespace Notifier.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -21,8 +21,8 @@ namespace Notifier.Controllers
             return Ok();
         }
 
-        [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] AuthenticateDto dto)
+        [HttpPost("credentials")]
+        public IActionResult Authenticate([FromBody] CredentialsDto dto)
         {
             string token = "header.payload.signature";
             return Ok(token);
