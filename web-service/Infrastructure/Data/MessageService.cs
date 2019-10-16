@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using Notifier.Core.Entities;
 using Notifier.Core.Interfaces;
@@ -9,6 +9,7 @@ namespace Notifier.Infrastructure.Data
     public class MessageService : IMessageService
     {
         private readonly IMongoCollection<Message> _messages;
+
         public MessageService()
         {
             var client = new MongoClient("mongodb://localhost:27017");
@@ -28,6 +29,14 @@ namespace Notifier.Infrastructure.Data
         public Message Create(Message message)
         {
             _messages.InsertOne(message);
+            return message;
+        }
+
+        public Message MarkAsSent(Message message)
+        {
+            var filter = Builders<Message>.Filter.Eq("Id", message.Id);
+            var update = Builders<Message>.Update.Set("WasSentOn", DateTime.Now);
+            _messages.UpdateOne(filter, update);
             return message;
         }
     }

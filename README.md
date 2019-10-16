@@ -9,6 +9,9 @@ the provided phone number.
 When the community needs to send out notifications, all subscribers will
 recieve a text.
 
+* [Local Swagger](https://localhost:5001/swagger/index.html)
+* [Local HangFire](https://localhost:5001/HangFire)
+
 ## features
 * Community members (subscribers) don't need to install an app
 * Community organizers (creators) can use a simple interface for creating and scheduling texts
@@ -20,7 +23,8 @@ recieve a text.
 ### API
 * `dotnet build web-service`
 * `dotnet run -p web-service`
-* https://localhost:5001/swagger/index.html
+* `dotnet watch -p web-service run`
+
 
 ### Database
 * `sudo service mongod start` - start the mongodb service

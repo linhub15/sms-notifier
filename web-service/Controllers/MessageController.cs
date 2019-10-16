@@ -10,11 +10,16 @@ namespace Notifier.Controllers
     public class MessageController : ControllerBase
     {
         private readonly IMessageService _messageService;
-        private readonly SmsApi _smsApi;
-        public MessageController(IMessageService messageService)
+        private readonly IMessageSender _messageSender;
+        private readonly IMessageScheduler _messageScheduler;
+        public MessageController(
+            IMessageService messageService,
+            IMessageSender messageSender,
+            IMessageScheduler messageScheduler)
         {
             _messageService = messageService;
-            _smsApi = new SmsApi();
+            _messageSender = messageSender;
+            _messageScheduler = messageScheduler;
         }
         
         [HttpGet]
@@ -34,14 +39,17 @@ namespace Notifier.Controllers
         [HttpPost]
         public IActionResult Create(Message message)
         {
-            _messageService.Create(message);
+            _messageScheduler.Schedule(
+                message,
+                () => _messageSender.SendMessage(message));
+
             return Ok(message);
         }
         
         [HttpPost("send-message")]
         public IActionResult SendMessage()
         {
-            _smsApi.SendMessage();
+            _messageSender.SendMessage();
             return Ok();
         }
     }

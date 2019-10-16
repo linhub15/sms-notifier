@@ -8,5 +8,6 @@ namespace Notifier.Core.Interfaces
         List<Message> Get();
         Message Get(string id);
         Message Create(Message message);
+        Message MarkAsSent(Message message);
     }
 }
