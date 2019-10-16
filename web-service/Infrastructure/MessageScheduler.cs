@@ -17,13 +17,13 @@ namespace Notifier.Infrastructure
         {
             message = _messageService.Create(message);
             
-            if (message.DateTimeToSend <= DateTime.Now)
+            if (message.DateTimeToSend <= DateTime.UtcNow)
             {
                 var executeSendMessage = sendMessage.Compile();
                 executeSendMessage();
                 return;
             }
-            var timeSpanToSend = message.DateTimeToSend - DateTime.Now;
+            var timeSpanToSend = message.DateTimeToSend - DateTime.UtcNow;
             BackgroundJob.Schedule(sendMessage, timeSpanToSend);
         }
     }
