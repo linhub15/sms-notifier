@@ -14,9 +14,10 @@ namespace Notifier.Infrastructure
             _messageService = messageService;
         }
         public void Schedule(Message message, Expression<Action> sendMessage)
-        {
+        {        
             message = _messageService.Create(message);
             
+            //scheduled time has passed - send right away
             if (message.DateTimeToSend <= DateTime.UtcNow)
             {
                 var executeSendMessage = sendMessage.Compile();
