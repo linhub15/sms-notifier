@@ -8,27 +8,24 @@ namespace Notifier.Infrastructure.Data
 {
     public class MessageService : IMessageService
     {
-        private readonly IMongoCollection<Message> _messages;
+        private readonly DbContext _db;
 
-        public MessageService()
+        public MessageService(DbContext dbContext)
         {
-            var client = new MongoClient("mongodb://localhost:27017");
-            var database = client.GetDatabase("notifier");
-
-            _messages = database.GetCollection<Message>("messages");
+            _db = dbContext;
         }
 
-        public List<Message> Get() => _messages
+        public List<Message> Get() => _db.Messages
             .Find(message => true)
             .ToList();
         
-        public Message Get(string id) => _messages
+        public Message Get(string id) => _db.Messages
             .Find<Message>(message => message.Id == id)
             .FirstOrDefault();
 
         public Message Create(Message message)
         {
-            _messages.InsertOne(message);
+            _db.Messages.InsertOne(message);
             return message;
         }
 
@@ -36,7 +33,7 @@ namespace Notifier.Infrastructure.Data
         {
             var filter = Builders<Message>.Filter.Eq("Id", message.Id);
             var update = Builders<Message>.Update.Set("WasSentOn", DateTime.Now);
-            _messages.UpdateOne(filter, update);
+            _db.Messages.UpdateOne(filter, update);
             return message;
         }
     }
