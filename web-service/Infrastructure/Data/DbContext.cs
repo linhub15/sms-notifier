@@ -4,10 +4,16 @@ using Notifier.Core.Entities;
 
 namespace Notifier.Infrastructure.Data
 {
-    public class DbContext
+    public interface IDbContext
     {
-        public readonly IMongoCollection<Message> Messages;
-        public readonly IMongoCollection<Community> Communities;
+        IMongoCollection<Message> Messages { get; }
+        IMongoCollection<Community> Communities { get; }
+    }
+
+    public class DbContext : IDbContext
+    {
+        public IMongoCollection<Message> Messages { get; }
+        public IMongoCollection<Community> Communities { get; }
 
         public DbContext(string connectionString, string dbName)
         {
@@ -17,8 +23,8 @@ namespace Notifier.Infrastructure.Data
 
             var database = client.GetDatabase(dbName);
 
-            Messages = database.GetCollection<Message>("message");
-            Communities = database.GetCollection<Community>("community");
+            Messages = database.GetCollection<Message>("messages");
+            Communities = database.GetCollection<Community>("communities");
         }
     }
 }

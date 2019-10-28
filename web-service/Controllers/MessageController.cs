@@ -41,16 +41,9 @@ namespace Notifier.Controllers
         {
             _messageScheduler.Schedule(
                 message,
-                () => _messageSender.SendMessage(message));
+                () => _messageSender.SendToSubscribers(message));
 
             return Ok(message);
-        }
-        
-        [HttpPost("send-message")]
-        public IActionResult SendMessage()
-        {
-            _messageSender.SendMessage();
-            return Ok();
         }
     }
 }

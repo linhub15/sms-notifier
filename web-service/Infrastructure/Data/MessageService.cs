@@ -8,9 +8,9 @@ namespace Notifier.Infrastructure.Data
 {
     public class MessageService : IMessageService
     {
-        private readonly DbContext _db;
+        private readonly IDbContext _db;
 
-        public MessageService(DbContext dbContext)
+        public MessageService(IDbContext dbContext)
         {
             _db = dbContext;
         }

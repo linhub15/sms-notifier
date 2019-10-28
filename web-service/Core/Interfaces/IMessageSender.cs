@@ -1,10 +1,12 @@
+using System.Threading.Tasks;
 using Notifier.Core.Entities;
 
 namespace Notifier.Core.Interfaces
 {
     public interface IMessageSender
     {
-        void SendMessage();
-        void SendMessage(Message message);
+        void SendToSubscribers(Message message);
+
+        Task SendAsync(Message message, string toPhoneNumber, IMessageService messageService);
     }
 }

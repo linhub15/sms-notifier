@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using MongoDB.Driver;
 using Notifier.Core.Entities;
 using Notifier.Core.Interfaces;
@@ -6,9 +8,9 @@ namespace Notifier.Infrastructure.Data
 {
     public class CommunityService : ICommunityService
     {
-        private readonly DbContext _db;
-        
-        public CommunityService(DbContext dbContext)
+        private readonly IDbContext _db;
+
+        public CommunityService(IDbContext dbContext)
         {
             _db = dbContext;
         }
@@ -18,6 +20,18 @@ namespace Notifier.Infrastructure.Data
             var filter = Builders<Community>.Filter.Eq("Tag", communityTag);
             var update = Builders<Community>.Update.Push("Subscribers", phoneNumber);
             _db.Communities.UpdateOne(filter, update);
+        }
+
+        public List<string> GetSubscribers(string communityTag)
+        {
+            var filter = Builders<Community>.Filter
+                .Eq(community => community.Tag, communityTag);
+
+            return  _db.Communities
+                .Find<Community>(filter)
+                .Limit(1)
+                .Single()
+                .Subscribers;
         }
     }
 }
