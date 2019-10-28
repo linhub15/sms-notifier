@@ -31,3 +31,26 @@ recieve a text.
 * `cd notifier-api/Database`
 * `npm start`
 
+# Roadmap
+
+## API
+
+### Creator
+- [x] GET /messages
+- [x] POST /message - sends the message to all subscribers
+- [ ] Cancel a scheduled message
+- [ ] Modify a scheduled message (time, content, etc)
+
+### Subscriber
+- [ ] Subscribe to a community tag
+- [ ] Unsubscribe to a community tag
+
+## Service Layer
+- [x] Store data with MongoDb.Driver
+- [x] Implement scheduling with `HangFire` & `HangFire.Mongo`
+- [x] Implement sending sms with Twilio Api
+- [ ] Implement authentication with Auth0
+
+## UI
+- [ ] Build web app for Creator to manage messages
+
