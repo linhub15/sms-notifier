@@ -42,8 +42,8 @@ recieve a text.
 - [ ] Modify a scheduled message (time, content, etc)
 
 ### Subscriber
-- [ ] Subscribe to a community tag
-- [ ] Unsubscribe to a community tag
+- [x] Subscribe to a community tag
+- [x] Unsubscribe to a community tag
 
 ## Service Layer
 - [x] Store data with MongoDb.Driver

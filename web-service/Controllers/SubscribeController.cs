@@ -4,7 +4,7 @@ using Notifier.Core.Interfaces;
 
 namespace Notifier.Controllers
 {
-    [Route("api/subscribe")]
+    [Route("api/subscriber")]
     [ApiController]
     public class SubscribeController : ControllerBase
     {
@@ -18,6 +18,13 @@ namespace Notifier.Controllers
         public IActionResult Subscribe([FromBody] SubscribeDto subscription)
         {
             _communityService.AddSubscriber(subscription.PhoneNumber, subscription.CommunityTag);
+            return Ok();
+        }
+
+        [HttpDelete]
+        public IActionResult UnSubscribe([FromBody] SubscribeDto subscription)
+        {
+            _communityService.RemoveSubscriber(subscription);
             return Ok();
         }
     }
