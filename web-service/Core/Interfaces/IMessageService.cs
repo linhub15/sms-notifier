@@ -11,6 +11,5 @@ namespace Notifier.Core.Interfaces
         Message MarkAsSent(Message message);
         void Schedule(Message message);
         void SendToSubscribers(Message message, List<string> subscribers);
-
     }
 }

@@ -9,5 +9,4 @@ namespace Notifier.Core.Interfaces
         void AddSubscriber(string phoneNumber, string communityTag);
         void RemoveSubscriber(SubscribeDto subscriber);
     }
-    
 }

@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using MongoDB.Driver;
 using Notifier.Core.Models;
 using Notifier.Core.Interfaces;
-using System.Threading.Tasks;
+using Notifier.Infrastructure.Data;
 
-namespace Notifier.Infrastructure.Data
+namespace Notifier.Infrastructure
 {
     public class MessageService : IMessageService
     {
@@ -52,7 +53,9 @@ namespace Notifier.Infrastructure.Data
         {
             message = this.Create(message);
 
-            // Get subscribers
+            // TODO(Hubert): potential circular dependency 
+            // Use private method, or move code else where
+            // Repository pattern??
             var subscribers = _subscriberService
                 .GetSubscribers(message.CommunityId);
 

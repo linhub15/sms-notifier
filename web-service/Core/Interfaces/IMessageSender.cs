@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Notifier.Core.Dtos;
 using Notifier.Core.Models;
 
 namespace Notifier.Core.Interfaces

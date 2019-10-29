@@ -4,8 +4,9 @@ using MongoDB.Driver;
 using Notifier.Core.Dtos;
 using Notifier.Core.Models;
 using Notifier.Core.Interfaces;
+using Notifier.Infrastructure.Data;
 
-namespace Notifier.Infrastructure.Data
+namespace Notifier.Infrastructure
 {
     public class SubscriberService : ISubscriberService
     {
