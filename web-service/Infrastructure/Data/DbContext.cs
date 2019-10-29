@@ -1,6 +1,6 @@
 using System;
 using MongoDB.Driver;
-using Notifier.Core.Entities;
+using Notifier.Core.Models;
 
 namespace Notifier.Infrastructure.Data
 {
@@ -10,12 +10,12 @@ namespace Notifier.Infrastructure.Data
         IMongoCollection<Community> Communities { get; }
     }
 
-    public class DbContext : IDbContext
+    public class NotifierDb : IDbContext
     {
         public IMongoCollection<Message> Messages { get; }
         public IMongoCollection<Community> Communities { get; }
 
-        public DbContext(string connectionString, string dbName)
+        public NotifierDb(string connectionString, string dbName)
         {
             var client = new MongoClient(connectionString);
             if (client == null)

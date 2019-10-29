@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Notifier.Core.Entities;
+using Notifier.Core.Models;
 
 namespace Notifier.Core.Interfaces
 {
@@ -10,5 +10,7 @@ namespace Notifier.Core.Interfaces
         Message Create(Message message);
         Message MarkAsSent(Message message);
         void Schedule(Message message);
+        void SendToSubscribers(Message message, List<string> subscribers);
+
     }
 }

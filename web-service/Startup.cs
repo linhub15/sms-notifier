@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Hangfire;
+﻿using Hangfire;
 using Hangfire.Mongo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+
 using Microsoft.OpenApi.Models;
 
 using Notifier.Core.Interfaces;
@@ -32,13 +26,13 @@ namespace Notifier
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IDbContext, DbContext>(
-                context => new DbContext("mongodb://localhost:27017", "notifier")
+            services.AddSingleton<IDbContext, NotifierDb>(
+                context => new NotifierDb("mongodb://localhost:27017", "notifier")
             );
             services.AddSingleton<IMessageService, MessageService>();
-            services.AddSingleton<IMessageSender, MessageSender>();
             services.AddSingleton<ISubscriberService, SubscriberService>();
-            services.AddSingleton<IMessageScheduler, MessageScheduler>();
+            services.AddSingleton<IMessageSender, TwilioMessageSender>();
+            services.AddSingleton<IMessageScheduler, HangFireScheduler>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(c =>

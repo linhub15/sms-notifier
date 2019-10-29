@@ -1,12 +1,12 @@
 using System;
 using System.Linq.Expressions;
 using Hangfire;
-using Notifier.Core.Entities;
+using Notifier.Core.Models;
 using Notifier.Core.Interfaces;
 
 namespace Notifier.Infrastructure 
 {
-    public class MessageScheduler : IMessageScheduler
+    public class HangFireScheduler : IMessageScheduler
     {
         public void Schedule(Message message, Expression<Action> sendMessage)
         {                    

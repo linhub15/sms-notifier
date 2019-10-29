@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Driver;
 using Notifier.Core.Dtos;
-using Notifier.Core.Entities;
+using Notifier.Core.Models;
 using Notifier.Core.Interfaces;
 
 namespace Notifier.Infrastructure.Data
@@ -15,12 +15,13 @@ namespace Notifier.Infrastructure.Data
         {
             _db = dbContext;
         }
+
         public List<string> GetSubscribers(string communityTag)
         {
             var filter = Builders<Community>.Filter
                 .Eq(community => community.Tag, communityTag);
 
-            return  _db.Communities
+            return _db.Communities
                 .Find<Community>(filter)
                 .Limit(1)
                 .Single()

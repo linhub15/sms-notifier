@@ -1,6 +1,6 @@
 using System;
 using System.Linq.Expressions;
-using Notifier.Core.Entities;
+using Notifier.Core.Models;
 
 namespace Notifier.Core.Interfaces
 {

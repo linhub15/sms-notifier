@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Notifier.Core.Entities;
+using Notifier.Core.Models;
 using Notifier.Core.Interfaces;
 
 namespace Notifier.Controllers

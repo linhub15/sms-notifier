@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using MongoDB.Driver;
-using Notifier.Core.Entities;
+using Notifier.Core.Models;
 using Notifier.Core.Interfaces;
+using System.Threading.Tasks;
 
 namespace Notifier.Infrastructure.Data
 {
@@ -11,15 +12,18 @@ namespace Notifier.Infrastructure.Data
         private readonly IDbContext _db;
         private readonly IMessageScheduler _scheduler;
         private readonly IMessageSender _smsSender;
+        private readonly ISubscriberService _subscriberService;
 
         public MessageService(
             IDbContext dbContext,
             IMessageScheduler messageScheduler,
-            IMessageSender messageSender)
+            IMessageSender messageSender,
+            ISubscriberService subscriberService)
         {
             _db = dbContext;
             _scheduler = messageScheduler;
             _smsSender = messageSender;
+            _subscriberService = subscriberService;
         }
 
         public List<Message> Get() => _db.Messages
@@ -48,9 +52,24 @@ namespace Notifier.Infrastructure.Data
         {
             message = this.Create(message);
 
+            // Get subscribers
+            var subscribers = _subscriberService
+                .GetSubscribers(message.CommunityId);
+
             _scheduler.Schedule(
                 message,
-                () => _smsSender.SendToSubscribers(message));
+                () => SendToSubscribers(message, subscribers));
+        }
+
+        public async void SendToSubscribers(Message message, List<string> phoneNumbers)
+        {
+            List<Task> listOfTasks = new List<Task>();
+
+            foreach (string phoneNumber in phoneNumbers)
+            {
+                listOfTasks.Add(_smsSender.SendAsync(message, phoneNumber, this));
+            };
+            await Task.WhenAll(listOfTasks);
         }
     }
 }
