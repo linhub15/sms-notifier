@@ -6,10 +6,10 @@ namespace Notifier.Controllers
 {
     [Route("api/subscriber")]
     [ApiController]
-    public class SubscribeController : ControllerBase
+    public class SubscriberController : ControllerBase
     {
-        private readonly ICommunityService _communityService;
-        public SubscribeController(ICommunityService communityService)
+        private readonly ISubscriberService _communityService;
+        public SubscriberController(ISubscriberService communityService)
         {
             _communityService = communityService;
         }

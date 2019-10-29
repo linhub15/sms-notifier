@@ -37,7 +37,7 @@ namespace Notifier
             );
             services.AddSingleton<IMessageService, MessageService>();
             services.AddSingleton<IMessageSender, MessageSender>();
-            services.AddSingleton<ICommunityService, CommunityService>();
+            services.AddSingleton<ISubscriberService, SubscriberService>();
             services.AddSingleton<IMessageScheduler, MessageScheduler>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

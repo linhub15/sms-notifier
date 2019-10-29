@@ -7,24 +7,14 @@ using Notifier.Core.Interfaces;
 
 namespace Notifier.Infrastructure.Data
 {
-    public class CommunityService : ICommunityService
+    public class SubscriberService : ISubscriberService
     {
         private readonly IDbContext _db;
 
-        public CommunityService(IDbContext dbContext)
+        public SubscriberService(IDbContext dbContext)
         {
             _db = dbContext;
         }
-
-        public void AddSubscriber(string phoneNumber, string communityTag)
-        {
-            var filter = Builders<Community>.Filter
-                .Eq("Tag", communityTag);
-            var update = Builders<Community>.Update
-                .Push("Subscribers", phoneNumber);
-            _db.Communities.UpdateOne(filter, update);
-        }
-
         public List<string> GetSubscribers(string communityTag)
         {
             var filter = Builders<Community>.Filter
@@ -36,6 +26,16 @@ namespace Notifier.Infrastructure.Data
                 .Single()
                 .Subscribers;
         }
+
+        public void AddSubscriber(string phoneNumber, string communityTag)
+        {
+            var filter = Builders<Community>.Filter
+                .Eq("Tag", communityTag);
+            var update = Builders<Community>.Update
+                .Push("Subscribers", phoneNumber);
+            _db.Communities.UpdateOne(filter, update);
+        }
+
 
         public void RemoveSubscriber(SubscribeDto subscriber)
         {
