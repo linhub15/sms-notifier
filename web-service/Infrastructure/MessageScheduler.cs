@@ -8,15 +8,8 @@ namespace Notifier.Infrastructure
 {
     public class MessageScheduler : IMessageScheduler
     {
-        private readonly IMessageService _messageService;
-        public MessageScheduler(IMessageService messageService)
-        {
-            _messageService = messageService;
-        }
         public void Schedule(Message message, Expression<Action> sendMessage)
-        {        
-            message = _messageService.Create(message);
-            
+        {                    
             // scheduled time has passed - send right away
             if (message.DateTimeToSend <= DateTime.UtcNow)
             {

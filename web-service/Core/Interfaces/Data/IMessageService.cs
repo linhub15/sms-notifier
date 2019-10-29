@@ -9,5 +9,6 @@ namespace Notifier.Core.Interfaces
         Message Get(string id);
         Message Create(Message message);
         Message MarkAsSent(Message message);
+        void Schedule(Message message);
     }
 }

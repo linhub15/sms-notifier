@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Notifier.Core.Entities;
 using Notifier.Core.Interfaces;
-using Notifier.Infrastructure;
 
 namespace Notifier.Controllers
 {
@@ -10,16 +9,10 @@ namespace Notifier.Controllers
     public class MessageController : ControllerBase
     {
         private readonly IMessageService _messageService;
-        private readonly IMessageSender _messageSender;
-        private readonly IMessageScheduler _messageScheduler;
-        public MessageController(
-            IMessageService messageService,
-            IMessageSender messageSender,
-            IMessageScheduler messageScheduler)
+
+        public MessageController(IMessageService messageService)
         {
             _messageService = messageService;
-            _messageSender = messageSender;
-            _messageScheduler = messageScheduler;
         }
         
         [HttpGet]
@@ -39,10 +32,7 @@ namespace Notifier.Controllers
         [HttpPost]
         public IActionResult Create(Message message)
         {
-            _messageScheduler.Schedule(
-                message,
-                () => _messageSender.SendToSubscribers(message));
-
+            _messageService.Schedule(message);
             return Ok(message);
         }
     }
