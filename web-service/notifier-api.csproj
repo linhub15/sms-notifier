@@ -13,7 +13,8 @@
     <PackageReference Include="MongoDB.Driver" Version="2.9.1" />
     <PackageReference Include="HangFire" Version="1.7.6" />
     <PackageReference Include="HangFire.Mongo" Version="0.6.4" />
-    <PackageReference Include="Twilio" Version="5.33.0" />
+    <PackageReference Include="Twilio" Version="5.34.0" />
+    <PackageReference Include="Twilio.AspNet.Core" Version="5.33.1" />
   </ItemGroup>
 
 </Project>
