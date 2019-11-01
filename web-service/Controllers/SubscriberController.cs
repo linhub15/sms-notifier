@@ -17,7 +17,7 @@ namespace Notifier.Controllers
         [HttpPost]
         public IActionResult Subscribe([FromBody] SubscribeDto subscription)
         {
-            _subscriberService.AddSubscriber(subscription.PhoneNumber, subscription.CommunityTag);
+            _subscriberService.AddSubscriber(subscription);
             return Ok();
         }
 

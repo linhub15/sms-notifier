@@ -6,7 +6,7 @@ namespace Notifier.Core.Interfaces
     public interface ISubscriberService
     {
         List<string> GetSubscribers(string communityTag);
-        void AddSubscriber(string phoneNumber, string communityTag);
+        void AddSubscriber(SubscribeDto subscriber);
         void RemoveSubscriber(SubscribeDto subscriber);
     }
 }

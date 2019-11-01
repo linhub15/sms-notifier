@@ -24,14 +24,14 @@ namespace Notifier.Controllers
             
             var subscriber = new SubscribeDto() 
             {
-                CommunityTag = body,
+                CommunityTag = "fmdc",
                 PhoneNumber = fromPhoneNumber
             };
 
             var response = new MessagingResponse();
             if (body.ToString().ToLower() == "follow")
             {
-                _subscriberService.AddSubscriber(fromPhoneNumber, "fmdc");
+                _subscriberService.AddSubscriber(subscriber);
                 response.Message($"You're following 'fmdc'. \n\nText 'unfollow' to stop getting texts.");
 
             }

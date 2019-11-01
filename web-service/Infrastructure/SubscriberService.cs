@@ -29,12 +29,12 @@ namespace Notifier.Infrastructure
                 .Subscribers;
         }
 
-        public void AddSubscriber(string phoneNumber, string communityTag)
+        public void AddSubscriber(SubscribeDto subscriber)
         {
             var filter = Builders<Community>.Filter
-                .Eq("Tag", communityTag);
+                .Eq("Tag", subscriber.CommunityTag);
             var update = Builders<Community>.Update
-                .Push("Subscribers", phoneNumber);
+                .Push("Subscribers", subscriber.PhoneNumber);
             _db.Communities.UpdateOne(filter, update);
         }
 
