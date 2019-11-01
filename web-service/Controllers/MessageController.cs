@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Notifier.Core.Models;
 using Notifier.Core.Interfaces;
+using Notifier.Core.Dtos;
 
 namespace Notifier.Controllers
 {
@@ -14,7 +15,7 @@ namespace Notifier.Controllers
         {
             _messageService = messageService;
         }
-        
+
         [HttpGet]
         public IActionResult Messages()
         {
@@ -37,10 +38,14 @@ namespace Notifier.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateContent(Message message)
+        public IActionResult UpdateContent(UpdateContentDto dto)
         {
-            message = _messageService
-                .UpdateContent(message.Id, message.Content);
+            var message = _messageService
+                .UpdateContent(dto.MessageId, dto.MessageContent);
+            if (message == null)
+            {
+                return UnprocessableEntity("The message was already sent to the subscribers, you can't modify the content!");
+            }
             return Ok(message);
         }
     }

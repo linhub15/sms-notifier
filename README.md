@@ -40,7 +40,8 @@ recieve a text.
 - [x] GET /messages
 - [x] POST /message - sends the message to all subscribers
 - [ ] Cancel a scheduled message
-- [ ] Modify a scheduled message (time, content, etc)
+- [ ] Modify a scheduled message time
+- [x] Modify a scheduled message content
 
 ### Subscriber
 - [x] Subscribe to a community tag

@@ -43,11 +43,17 @@ namespace Notifier.Infrastructure
 
         public Message UpdateContent(string messageId, string content)
         {
+            var message = Get(messageId);
+            // if the message was already sent, you can't update content
+            if (message.WasSentOn.HasValue)
+            {
+                return null;
+            }
             var filter = Builders<Message>.Filter.Eq("Id", messageId);
             var update = Builders<Message>.Update.Set("Content", content);
             _db.Messages.UpdateOne(filter, update);
 
-            return Get(messageId);
+            return message;
         }
 
         public Message MarkAsSent(Message message)
