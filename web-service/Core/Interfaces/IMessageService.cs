@@ -10,6 +10,6 @@ namespace Notifier.Core.Interfaces
         Message Create(Message message);
         Message MarkAsSent(Message message);
         void Schedule(Message message);
-        void SendToSubscribers(Message message, List<string> subscribers);
+        void SendToSubscribers(string messageId, List<string> subscribers);
     }
 }

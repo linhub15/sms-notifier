@@ -61,11 +61,12 @@ namespace Notifier.Infrastructure
 
             _scheduler.Schedule(
                 message,
-                () => SendToSubscribers(message, subscribers));
+                () => SendToSubscribers(message.Id, subscribers));
         }
 
-        public async void SendToSubscribers(Message message, List<string> phoneNumbers)
+        public async void SendToSubscribers(string messageId, List<string> phoneNumbers)
         {
+            var message = Get(messageId);
             List<Task> listOfTasks = new List<Task>();
 
             foreach (string phoneNumber in phoneNumbers)
