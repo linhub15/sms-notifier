@@ -8,23 +8,23 @@ namespace Notifier.Controllers
     [ApiController]
     public class SubscriberController : ControllerBase
     {
-        private readonly ISubscriberService _communityService;
+        private readonly ISubscriberService _subscriberService;
         public SubscriberController(ISubscriberService communityService)
         {
-            _communityService = communityService;
+            _subscriberService = communityService;
         }
 
         [HttpPost]
         public IActionResult Subscribe([FromBody] SubscribeDto subscription)
         {
-            _communityService.AddSubscriber(subscription.PhoneNumber, subscription.CommunityTag);
+            _subscriberService.AddSubscriber(subscription.PhoneNumber, subscription.CommunityTag);
             return Ok();
         }
 
         [HttpDelete]
         public IActionResult UnSubscribe([FromBody] SubscribeDto subscription)
         {
-            _communityService.RemoveSubscriber(subscription);
+            _subscriberService.RemoveSubscriber(subscription);
             return Ok();
         }
     }

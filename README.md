@@ -24,7 +24,7 @@ recieve a text.
 * `dotnet build web-service`
 * `dotnet run -p web-service`
 * `dotnet watch -p web-service run`
-* `dotnet run --urls https://0.0.0.0.5001 -p web-service`
+* `dotnet run --urls https://0.0.0.0:5001 -p web-service`
 
 
 ### Database
