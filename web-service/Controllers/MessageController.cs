@@ -35,5 +35,13 @@ namespace Notifier.Controllers
             _messageService.Schedule(message);
             return Ok(message);
         }
+
+        [HttpPut]
+        public IActionResult UpdateContent(Message message)
+        {
+            message = _messageService
+                .UpdateContent(message.Id, message.Content);
+            return Ok(message);
+        }
     }
 }

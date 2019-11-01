@@ -41,6 +41,15 @@ namespace Notifier.Infrastructure
             return message;
         }
 
+        public Message UpdateContent(string messageId, string content)
+        {
+            var filter = Builders<Message>.Filter.Eq("Id", messageId);
+            var update = Builders<Message>.Update.Set("Content", content);
+            _db.Messages.UpdateOne(filter, update);
+
+            return Get(messageId);
+        }
+
         public Message MarkAsSent(Message message)
         {
             var filter = Builders<Message>.Filter.Eq("Id", message.Id);
@@ -51,7 +60,7 @@ namespace Notifier.Infrastructure
 
         public void Schedule(Message message)
         {
-            message = this.Create(message);
+            message = Create(message);
 
             // TODO(Hubert): potential circular dependency 
             // Use private method, or move code else where
