@@ -39,8 +39,8 @@ recieve a text.
 ### Creator
 - [x] GET /messages
 - [x] POST /message - sends the message to all subscribers
-- [ ] Cancel a scheduled message
-- [ ] Modify a scheduled message time
+- [x] Cancel a scheduled message
+- [x] Modify a scheduled message time
 - [x] Modify a scheduled message content
 
 ### Subscriber
