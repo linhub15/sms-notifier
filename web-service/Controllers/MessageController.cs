@@ -48,5 +48,12 @@ namespace Notifier.Controllers
             }
             return Ok(message);
         }
+
+        [HttpDelete]
+        public IActionResult DeleteMessage(string messageId)
+        {
+            _messageService.Delete(messageId);
+            return Ok();
+        }
     }
 }

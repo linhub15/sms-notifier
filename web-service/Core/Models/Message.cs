@@ -14,5 +14,6 @@ namespace Notifier.Core.Models
         public DateTime DateTimeToSend { get; set; }
         public DateTime? WasSentOn { get; set; }
         public string CommunityId { get; set; }
+        public string JobId { get; set; }
     }
 }

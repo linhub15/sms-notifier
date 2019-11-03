@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using MongoDB.Driver;
 using Notifier.Core.Models;
 using Notifier.Core.Interfaces;
@@ -41,6 +40,23 @@ namespace Notifier.Infrastructure
             return message;
         }
 
+        public void Delete(string messageId)
+        {
+            var message = Get(messageId);
+            var filter = Builders<Message>.Filter.Eq("Id", messageId);
+            _db.Messages.DeleteOne(filter);
+            _scheduler.Unschedule(message.JobId);
+        }
+
+        public void SetJobId(string id, string jobId)
+        {
+            var message = Get(id);
+
+            var filter = Builders<Message>.Filter.Eq("Id", id);
+            var update = Builders<Message>.Update.Set("JobId", jobId);
+            _db.Messages.UpdateOne(filter, update);
+        }
+
         public Message UpdateContent(string messageId, string content)
         {
             var message = Get(messageId);
@@ -74,21 +90,21 @@ namespace Notifier.Infrastructure
             var subscribers = _subscriberService
                 .GetSubscribers(message.CommunityId);
 
-            _scheduler.Schedule(
+            var jobId = _scheduler.Schedule(
                 message,
                 () => SendToSubscribers(message.Id, subscribers));
+
+            SetJobId(message.Id, jobId);
         }
 
-        public async void SendToSubscribers(string messageId, List<string> phoneNumbers)
+        public void SendToSubscribers(string messageId, List<string> phoneNumbers)
         {
             var message = Get(messageId);
-            List<Task> listOfTasks = new List<Task>();
 
             foreach (string phoneNumber in phoneNumbers)
             {
-                listOfTasks.Add(_smsSender.SendAsync(message, phoneNumber, this));
-            };
-            await Task.WhenAll(listOfTasks);
+                _smsSender.SendAsync(message, phoneNumber, this);
+            }
         }
     }
 }

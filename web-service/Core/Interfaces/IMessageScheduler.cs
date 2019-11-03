@@ -6,6 +6,7 @@ namespace Notifier.Core.Interfaces
 {
     public interface IMessageScheduler
     {
-        void Schedule(Message message, Expression<Action> sendMessage);
+        string Schedule(Message message, Expression<Action> sendMessage);
+        void Unschedule(string jobId);
     }
 }

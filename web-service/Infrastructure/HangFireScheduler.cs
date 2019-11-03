@@ -8,17 +8,23 @@ namespace Notifier.Infrastructure
 {
     public class HangFireScheduler : IMessageScheduler
     {
-        public void Schedule(Message message, Expression<Action> sendMessage)
+        public string Schedule(Message message, Expression<Action> sendMessage)
         {                    
             // scheduled time has passed - send right away
             if (message.DateTimeToSend <= DateTime.UtcNow)
             {
                 var executeSendMessage = sendMessage.Compile();
                 executeSendMessage();
-                return;
+                return null;
             }
             var timeSpanToSend = message.DateTimeToSend - DateTime.UtcNow;
-            BackgroundJob.Schedule(sendMessage, timeSpanToSend);
+            var jobId = BackgroundJob.Schedule(sendMessage, timeSpanToSend);
+            return jobId;
+        }
+
+        public void Unschedule(string jobId)
+        {
+            if (jobId != null) BackgroundJob.Delete(jobId);
         }
     }
 }
