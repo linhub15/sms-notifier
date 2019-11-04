@@ -19,8 +19,10 @@ recieve a text.
 ## Setup
 * `git clone https://github.com/linhub15/notifier-api`
 * `cd notifier-api`
+* Create MongoDb called `notifier`
+* There are two collections: `communities` and `messages`
 
-### API
+### WebApi
 * `dotnet build web-service`
 * `dotnet run -p web-service`
 * `dotnet watch -p web-service run`
@@ -29,8 +31,6 @@ recieve a text.
 
 ### Database
 * `sudo service mongod start` - start the mongodb service
-* `cd notifier-api/Database`
-* `npm start`
 
 # Roadmap
 
