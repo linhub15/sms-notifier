@@ -1,4 +1,4 @@
-namespace Notifier.Core.Interfaces
+namespace Notifier.Core.UseCases
 {
     public interface IUseCaseInteractor<TRequest, TResponse>
     {
