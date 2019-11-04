@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Notifier.Core.Gateways;
 using Notifier.Core.Interfaces;
+using Notifier.Core.UseCases;
 using Notifier.Infrastructure;
 using Notifier.Infrastructure.Data;
 
@@ -33,6 +34,9 @@ namespace Notifier
             services.AddSingleton<ISubscriberService, SubscriberService>();
             services.AddSingleton<IMessageSender, TwilioMessageSender>();
             services.AddSingleton<ISchedulerGateway, HangFireScheduler>();
+
+            SetupUseCases(services);
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(c =>
@@ -79,6 +83,18 @@ namespace Notifier
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Notifier-Api");
             });
+        }
+
+        private void SetupUseCases(IServiceCollection services)
+        {
+            services.AddSingleton<IUseCaseInteractor<GetMessageRequest, GetMessageResponse>, GetMessageInteractor>();
+            services.AddSingleton<IUseCaseInteractor<ModifyMessageRequest, ModifyMessageResponse>, ModifyMessageInteractor>();
+            services.AddSingleton<IUseCaseInteractor<RescheduleMessageRequest, RescheduleMessageResponse>, RescheduleMessageInteractor>();
+            services.AddSingleton<IUseCaseInteractor<ScheduleMessageRequest, ScheduleMessageResponse>, ScheduleMessageInteractor>();
+            services.AddSingleton<IUseCaseInteractor<SendMessageRequest, SendMessageResponse>, SendMessageInteractor>();
+            services.AddSingleton<IUseCaseInteractor<SubscribeRequest, SubscribeResponse>, SubscribeInteractor>();
+            services.AddSingleton<IUseCaseInteractor<UnsubscribeRequest, UnsubscribeResponse>, UnsubscribeInteractor>();
+            services.AddSingleton<IUseCaseInteractor<UnscheduleMessageRequest, UnscheduleMessageResponse>, UnscheduleMessageInteractor>();
         }
     }
 }
