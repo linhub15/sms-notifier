@@ -25,13 +25,17 @@ namespace Notifier.Core.UseCases
         }
         public ScheduleMessageResponse Handle(ScheduleMessageRequest request)
         {
-            // TODO(Hubert): Create message from DTO because many properties are not required to pass in;
-            var message = request.Message;
+            var message = new Message()
+            {
+                Content = request.MessageContent,
+                DateTimeToSend = request.DateTimeToSend,
+                CommunityId = request.CommunityId  
+            };
 
             message = _messages.Create(message);
 
             var phoneNumbers = _communities
-                .Get(request.Message.CommunityId)
+                .Get(request.CommunityId)
                 .Subscribers;
 
             _scheduler.Schedule(
