@@ -1,24 +1,16 @@
 using System;
 using System.Linq.Expressions;
 using Hangfire;
-using Notifier.Core.Models;
-using Notifier.Core.Interfaces;
+using Notifier.Core.Gateways;
 
 namespace Notifier.Infrastructure 
 {
-    public class HangFireScheduler : IMessageScheduler
+    public class HangFireScheduler : ISchedulerGateway
     {
-        public string Schedule(Message message, Expression<Action> sendMessage)
-        {                    
-            // scheduled time has passed - send right away
-            if (message.DateTimeToSend <= DateTime.UtcNow)
-            {
-                var executeSendMessage = sendMessage.Compile();
-                executeSendMessage();
-                return null;
-            }
-            var timeSpanToSend = message.DateTimeToSend - DateTime.UtcNow;
-            var jobId = BackgroundJob.Schedule(sendMessage, timeSpanToSend);
+        public string Schedule(Expression<Action> action, DateTime onOrAfter)
+        {
+            var timeSpanToSend = onOrAfter - DateTime.UtcNow;
+            var jobId = BackgroundJob.Schedule(action, timeSpanToSend);
             return jobId;
         }
 

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using Microsoft.OpenApi.Models;
-
+using Notifier.Core.Gateways;
 using Notifier.Core.Interfaces;
 using Notifier.Infrastructure;
 using Notifier.Infrastructure.Data;
@@ -32,7 +32,7 @@ namespace Notifier
             services.AddSingleton<IMessageService, MessageService>();
             services.AddSingleton<ISubscriberService, SubscriberService>();
             services.AddSingleton<IMessageSender, TwilioMessageSender>();
-            services.AddSingleton<IMessageScheduler, HangFireScheduler>();
+            services.AddSingleton<ISchedulerGateway, HangFireScheduler>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(c =>
