@@ -6,5 +6,6 @@ namespace Notifier.Core.Gateways
     public interface ISchedulerGateway
     {
         string Schedule(Expression<Action> action, TimeSpan delay);
+        void Unschedule(string jobId);
     }
 }
