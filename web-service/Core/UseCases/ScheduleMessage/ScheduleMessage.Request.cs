@@ -7,9 +7,5 @@ namespace Notifier.Core.UseCases
         public string MessageContent { get; set; }
         public string CommunityId { get; set; }
         public DateTime DateTimeToSend { get; set; }
-        public TimeSpan Delay
-        {
-            get => DateTimeToSend - DateTime.UtcNow;
-        }
     }
 }

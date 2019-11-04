@@ -45,7 +45,7 @@ namespace Notifier.Core.UseCases
                     phoneNumber => _sms.SendMessageAsync(
                         message,
                         phoneNumber)),
-                request.Delay);
+                request.DateTimeToSend);
 
             return new ScheduleMessageResponse();
         }

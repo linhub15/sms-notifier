@@ -39,7 +39,7 @@ namespace Notifier.Core.UseCases
                     phoneNumber => _sms.SendMessageAsync(
                         message,
                         phoneNumber)),
-                request.Delay);
+                request.NewDateTimeToSend);
 
             return new RescheduleMessageResponse();
         }
