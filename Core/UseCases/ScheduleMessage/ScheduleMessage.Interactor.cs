@@ -40,12 +40,15 @@ namespace Notifier.Core.UseCases
                 .Subscribers
                 .ToList();
 
-            _scheduler.Schedule(
+            var jobId = _scheduler.Schedule(
                 () => phoneNumbers.ForEach(
                     phoneNumber => _sms.SendMessageAsync(
                         message,
                         phoneNumber)),
                 request.DateTimeToSend);
+
+            message.JobId = jobId;
+            _messages.Update(message);
 
             return new ScheduleMessageResponse();
         }

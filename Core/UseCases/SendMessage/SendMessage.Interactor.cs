@@ -1,3 +1,4 @@
+using System.Linq;
 using Notifier.Core.Entities;
 using Notifier.Core.Gateways;
 using Notifier.Core.Interfaces;
@@ -9,18 +10,29 @@ namespace Notifier.Core.UseCases
     {
         private ISmsGateway _sms;
         private IRepository<string, Message> _messages;
+        private IRepository<string, Community> _communities;
         public SendMessageInteractor(
             ISmsGateway smsGateway,
-            IRepository<string, Message> repository)
+            IRepository<string, Message> messages,
+            IRepository<string, Community> communities)
         {
             _sms = smsGateway;
-            _messages = repository;
+            _messages = messages;
+            _communities = communities;
         }
 
         public SendMessageResponse Handle(SendMessageRequest request)
         {
-            _sms.SendMessageAsync(request.Message, request.ToPhoneNumber);
             _messages.Create(request.Message);
+
+            var phoneNumbers = _communities
+                .Get(request.Message.CommunityId)
+                .Subscribers
+                .ToList();
+
+            phoneNumbers.ForEach(phoneNumber =>
+                _sms.SendMessageAsync(request.Message, phoneNumber)
+            );
             return new SendMessageResponse();
         }
     }
