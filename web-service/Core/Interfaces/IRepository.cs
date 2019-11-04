@@ -7,7 +7,7 @@ namespace Notifier.Core.Interfaces
         TEntity Get(TId id);
         IList<TEntity> List();
 
-        TId Create(TEntity entity);
+        TEntity Create(TEntity entity);
         TEntity Update(TEntity entity);
         TId Delete(TId id);
     }
