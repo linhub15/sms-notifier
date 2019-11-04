@@ -1,5 +1,5 @@
+using Notifier.Core.Entities;
 using Notifier.Core.Interfaces;
-using Notifier.Core.Models;
 
 namespace Notifier.Core.UseCases
 {

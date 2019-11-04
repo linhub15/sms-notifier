@@ -1,5 +1,5 @@
+using Notifier.Core.Entities;
 using Notifier.Core.Interfaces;
-using Notifier.Core.Models;
 
 namespace Notifier.Core.UseCases
 {
@@ -14,8 +14,11 @@ namespace Notifier.Core.UseCases
         public UnsubscribeResponse Handle(UnsubscribeRequest request)
         {
             var community = _communities.Get(request.CommunityId);
-            community.Subscribers.Remove(request.PhoneNumber);
-            _communities.Update(community);
+            var success = community.Subscribers.Remove(request.PhoneNumber);
+            if (success)
+            {
+                _communities.Update(community);
+            }
 
             return new UnsubscribeResponse();
         }
