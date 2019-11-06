@@ -1,58 +1,54 @@
-# notifier-api
+# Sms Notifier
 
-Communities can setup text messages to be sent out to their community members.
+Follows Robert C. Martin's clean architecture pattern.
 
-Given a phone number and a community id (#fmdc), a community member can
-subscribe to text-message notifications by texting the community id (#fmdc) to
-the provided phone number.
+Built with .NET Core, Hangfire and MongoDb.
 
-When the community needs to send out notifications, all subscribers will
-recieve a text.
+Uses Twilio API.
 
-* [Local Swagger](https://localhost:5001/swagger/index.html)
-* [Local HangFire](https://localhost:5001/HangFire)
+## Summary
 
-## features
-* Community members (subscribers) don't need to install an app
-* Community organizers (creators) can use a simple interface for creating and scheduling texts
+Communities can schedule text messages to a list of subscriber phone numbers.
 
-## Setup
-* `git clone https://github.com/linhub15/notifier-api`
-* `cd notifier-api`
-* Create MongoDb called `notifier`
-* There are two collections: `communities` and `messages`
+A community member can subscribe to text-messages by texting `follow`
+to the community phone number. Text `unfollow` to stop receiving notifications.
 
-### WebApi
-* `dotnet build web-service`
-* `dotnet run -p web-service`
-* `dotnet watch -p web-service run`
-* `dotnet run --urls https://0.0.0.0:5001 -p web-service`
+## Dev Setup
 
+### Dependencies
+* .NET Core SDK 2.2
+* MongoDb v4.2.1
+
+### Secrets
+
+```
+echo {} > ~/.microsoft/usersecrets/dfb1a7e1-bd3d-41ff-9d34-f0d983500092/secrets.json
+dotnet user-secrets set "Twilio:AccountId" "the-actual-account-id"
+dotnet user-secrets set "Twilio:AuthToken" "auth-token"
+```
 
 ### Database
-* `sudo service mongod start` - start the mongodb service
 
-# Roadmap
+```
+mongo
+use notifier
+db.communities.insertOne({
+    "_id":"5dc24344d0d0b9503730ea5e",
+    "Name":"Freestyle Movement",
+    "Tag":"fmdc",
+    "Subscribers":[]
+})
+```
 
-## API
+## Debug
+- [Local Swagger](https://localhost:5001/swagger/index.html)
+- [Local HangFire](https://localhost:5001/HangFire)
 
-### Creator
-- [x] GET /messages
-- [x] POST /message - sends the message to all subscribers
-- [x] Cancel a scheduled message
-- [x] Modify a scheduled message time
-- [x] Modify a scheduled message content
+## Cli References
 
-### Subscriber
-- [x] Subscribe to a community tag
-- [x] Unsubscribe to a community tag
-
-## Service Layer
-- [x] Store data with MongoDb.Driver
-- [x] Implement scheduling with `HangFire` & `HangFire.Mongo`
-- [x] Implement sending sms with Twilio Api
-- [ ] Implement authentication with Auth0
-
-## UI
-- [ ] Build web app for Creator to manage messages
+- `dotnet build WebApi`
+- `dotnet run -p WebApi`
+- `dotnet watch -p WebApi run`
+- `dotnet run --urls https://0.0.0.0:5001 -p WebApi` - serves it to public (when port forwarded)
+- `sudo service mongod start` - start the mongodb service
 
