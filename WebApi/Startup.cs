@@ -18,9 +18,18 @@ namespace Notifier
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables();
+            
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -28,13 +37,12 @@ namespace Notifier
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Dependency Injection
             services.AddSingleton<IDbContext, NotifierDb>(
                 context => new NotifierDb("mongodb://localhost:27017", "notifier")
             );
-            services.AddSingleton<IMessageService, MessageService>();
-            services.AddSingleton<ISubscriberService, SubscriberService>();
-            services.AddSingleton<IMessageSender, TwilioMessageSender>();
-            services.AddSingleton<ISchedulerGateway, HangFireScheduler>();
+            services.AddSingleton<ISmsGateway, TwilioSmsGateway>();
+            services.AddSingleton<ISchedulerGateway, HangFireSchedulerGateway>();
             services.AddSingleton<IRepository<string, Message>, MessageRepository>();
             services.AddSingleton<IRepository<string, Community>, CommunityRepository>();
 
@@ -60,7 +68,6 @@ namespace Notifier
                     "notifier",
                     new MongoStorageOptions { MigrationOptions = migrationOptions })
             );
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

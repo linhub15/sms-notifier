@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <RootNamespace>Notifier</RootNamespace>
+    <UserSecretsId>dfb1a7e1-bd3d-41ff-9d34-f0d983500092</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
