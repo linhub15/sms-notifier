@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Notifier.Core.Entities;
-using Notifier.Core.Interfaces;
+using Notifier.Core.Gateways;
 using Notifier.Infrastructure.Data;
 
 namespace Notifier.Infrastructure
 {
-    public class MessageRepository : IRepository<string, Message>
+    public class MessageRepository : IRepositoryGateway<string, Message>
     {
         IDbContext _db;
         public MessageRepository(IDbContext dbContext)

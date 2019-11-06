@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Notifier.Core.Entities;
 using Notifier.Core.Gateways;
-using Notifier.Core.Interfaces;
 using Notifier.Core.UseCases;
 using Notifier.Infrastructure;
 using Notifier.Infrastructure.Data;
@@ -43,8 +42,8 @@ namespace Notifier
             );
             services.AddSingleton<ISmsGateway, TwilioSmsGateway>();
             services.AddSingleton<ISchedulerGateway, HangFireSchedulerGateway>();
-            services.AddSingleton<IRepository<string, Message>, MessageRepository>();
-            services.AddSingleton<IRepository<string, Community>, CommunityRepository>();
+            services.AddSingleton<IRepositoryGateway<string, Message>, MessageRepository>();
+            services.AddSingleton<IRepositoryGateway<string, Community>, CommunityRepository>();
 
             SetupUseCases(services);
 

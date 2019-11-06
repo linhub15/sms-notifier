@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using MongoDB.Driver;
 using Notifier.Core.Entities;
-using Notifier.Core.Interfaces;
+using Notifier.Core.Gateways;
 using Notifier.Infrastructure.Data;
 
 namespace Notifier.Infrastructure
 {
-    public class CommunityRepository : IRepository<string, Community>
+    public class CommunityRepository : IRepositoryGateway<string, Community>
     {
         IDbContext _db;
         public CommunityRepository(IDbContext dbContext)

@@ -1,6 +1,5 @@
 using Notifier.Core.Entities;
 using Notifier.Core.Gateways;
-using Notifier.Core.Interfaces;
 
 namespace Notifier.Core.UseCases
 {
@@ -8,10 +7,10 @@ namespace Notifier.Core.UseCases
         : IUseCaseInteractor<UnscheduleMessageRequest, UnscheduleMessageResponse>
     {
         private ISchedulerGateway _scheduler;
-        private IRepository<string, Message> _messages;
+        private IRepositoryGateway<string, Message> _messages;
         public UnscheduleMessageInteractor(
             ISchedulerGateway schedulerGateway,
-            IRepository<string, Message> messageRepository)
+            IRepositoryGateway<string, Message> messageRepository)
         {
             _scheduler = schedulerGateway;
             _messages = messageRepository;

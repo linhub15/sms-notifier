@@ -1,13 +1,13 @@
 using Notifier.Core.Entities;
-using Notifier.Core.Interfaces;
+using Notifier.Core.Gateways;
 
 namespace Notifier.Core.UseCases
 {
     public class ListMessagesInteractor
         : IUseCaseInteractor<ListMessagesRequest, ListMessagesResponse>
     {
-        IRepository<string, Message> _messages;
-        public ListMessagesInteractor(IRepository<string, Message> messages)
+        IRepositoryGateway<string, Message> _messages;
+        public ListMessagesInteractor(IRepositoryGateway<string, Message> messages)
         {
             _messages = messages;
         }

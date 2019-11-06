@@ -1,13 +1,13 @@
 using Notifier.Core.Entities;
-using Notifier.Core.Interfaces;
+using Notifier.Core.Gateways;
 
 namespace Notifier.Core.UseCases
 {
     public class UnsubscribeInteractor
         : IUseCaseInteractor<UnsubscribeRequest, UnsubscribeResponse>
     {
-        IRepository<string, Community> _communities;
-        public UnsubscribeInteractor(IRepository<string, Community> repository)
+        IRepositoryGateway<string, Community> _communities;
+        public UnsubscribeInteractor(IRepositoryGateway<string, Community> repository)
         {
             _communities = repository;
         }

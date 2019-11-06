@@ -1,7 +1,6 @@
 using System.Linq;
 using Notifier.Core.Entities;
 using Notifier.Core.Gateways;
-using Notifier.Core.Interfaces;
 
 namespace Notifier.Core.UseCases
 {
@@ -10,13 +9,13 @@ namespace Notifier.Core.UseCases
     {
         private ISchedulerGateway _scheduler;
         private ISmsGateway _sms;
-        private IRepository<string, Message> _messages;
-        private IRepository<string, Community> _communities;
+        private IRepositoryGateway<string, Message> _messages;
+        private IRepositoryGateway<string, Community> _communities;
         public RescheduleMessageInteractor(
             ISchedulerGateway schedulerGateway,
             ISmsGateway smsGateway,
-            IRepository<string, Message> messageRepository,
-            IRepository<string, Community> communityRepository)
+            IRepositoryGateway<string, Message> messageRepository,
+            IRepositoryGateway<string, Community> communityRepository)
         {
             _scheduler = schedulerGateway;
             _sms = smsGateway;

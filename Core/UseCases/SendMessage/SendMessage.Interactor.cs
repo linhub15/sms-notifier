@@ -1,7 +1,6 @@
 using System.Linq;
 using Notifier.Core.Entities;
 using Notifier.Core.Gateways;
-using Notifier.Core.Interfaces;
 
 namespace Notifier.Core.UseCases
 {
@@ -9,12 +8,12 @@ namespace Notifier.Core.UseCases
         : IUseCaseInteractor<SendMessageRequest, SendMessageResponse>
     {
         private ISmsGateway _sms;
-        private IRepository<string, Message> _messages;
-        private IRepository<string, Community> _communities;
+        private IRepositoryGateway<string, Message> _messages;
+        private IRepositoryGateway<string, Community> _communities;
         public SendMessageInteractor(
             ISmsGateway smsGateway,
-            IRepository<string, Message> messages,
-            IRepository<string, Community> communities)
+            IRepositoryGateway<string, Message> messages,
+            IRepositoryGateway<string, Community> communities)
         {
             _sms = smsGateway;
             _messages = messages;

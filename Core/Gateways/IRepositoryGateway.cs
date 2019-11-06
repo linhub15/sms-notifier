@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace Notifier.Core.Interfaces
+namespace Notifier.Core.Gateways
 {
-    public interface IRepository<TId, TEntity>
+    public interface IRepositoryGateway<TId, TEntity>
     {
         TEntity Get(TId id);
         IList<TEntity> List();
