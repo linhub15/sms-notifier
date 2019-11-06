@@ -1,5 +1,7 @@
 # Sms Notifier
 
+[![Build Status](https://github.com/linhub15/notifier-api/workflows/ci/badge.svg?branch=master&event=push)](https://github.com/linhub15/notifier-api/actions)
+
 Follows Robert C. Martin's clean architecture pattern.
 
 Built with .NET Core, Hangfire and MongoDb.
