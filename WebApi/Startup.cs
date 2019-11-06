@@ -26,6 +26,7 @@ namespace Notifier
             
             if (env.IsDevelopment())
             {
+                builder.AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
                 builder.AddUserSecrets<Startup>();
             }
             Configuration = builder.Build();
@@ -36,9 +37,12 @@ namespace Notifier
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("Default");
+            var dbName = Configuration.GetValue<string>("MongoDbName");
+
             // Dependency Injection
             services.AddSingleton<IDbContext, NotifierDb>(
-                context => new NotifierDb("mongodb://localhost:27017", "notifier")
+                context => new NotifierDb(connectionString, dbName)
             );
             services.AddSingleton<ISmsGateway, TwilioSmsGateway>();
             services.AddSingleton<ISchedulerGateway, HangFireSchedulerGateway>();
@@ -47,6 +51,7 @@ namespace Notifier
 
             SetupUseCases(services);
 
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(c =>
@@ -63,8 +68,8 @@ namespace Notifier
             services.AddHangfire(
                 configuration => configuration
                 .UseMongoStorage(
-                    "mongodb://localhost:27017",
-                    "notifier",
+                    connectionString,
+                    dbName,
                     new MongoStorageOptions { MigrationOptions = migrationOptions })
             );
         }
