@@ -88,14 +88,13 @@ namespace Notifier.Controllers
             return Ok();
         }
 
-        [HttpPut]
-        public IActionResult UpdateContent(UpdateContentDto dto)
+        [HttpPut("{id}/content")]
+        public IActionResult UpdateContent(string id, [FromBody] string content)
         {
-            // TODO: implement with use case
             var request = new ModifyMessageRequest()
             {
-                MessageId = dto.MessageId,
-                NewMessageContent = dto.MessageContent
+                MessageId = id,
+                NewMessageContent = content
             };
             var response = _modifyMessage.Handle(request);
             return Ok();

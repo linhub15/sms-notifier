@@ -14,6 +14,7 @@ namespace Notifier.Core.UseCases
         public ModifyMessageResponse Handle(ModifyMessageRequest request)
         {
             var message = _messages.Get(request.MessageId);
+            message.Content = request.NewMessageContent;
             _messages.Update(message);
 
             return new ModifyMessageResponse();
