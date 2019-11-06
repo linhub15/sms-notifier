@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Notifier.Core.Models;
-using Notifier.Core.Interfaces;
+using Notifier.Core.Entities;
 using Notifier.Core.Dtos;
+using Notifier.Core.UseCases;
+using System;
 
 namespace Notifier.Controllers
 {
@@ -9,50 +10,94 @@ namespace Notifier.Controllers
     [ApiController]
     public class MessageController : ControllerBase
     {
-        private readonly IMessageService _messageService;
+        private IUseCaseInteractor<GetMessageRequest, GetMessageResponse> _getMessage;
+        private IUseCaseInteractor<ListMessagesRequest, ListMessagesResponse> _listMessages;
+        private IUseCaseInteractor<SendMessageRequest, SendMessageResponse> _sendMessage;
+        private IUseCaseInteractor<ScheduleMessageRequest, ScheduleMessageResponse> _scheduleMessage;
+        private IUseCaseInteractor<ModifyMessageRequest, ModifyMessageResponse> _modifyMessage;
+        private IUseCaseInteractor<UnscheduleMessageRequest, UnscheduleMessageResponse> _unscheduleMessage;
 
-        public MessageController(IMessageService messageService)
+        public MessageController(
+            IUseCaseInteractor<GetMessageRequest, GetMessageResponse> getMessage,
+            IUseCaseInteractor<ListMessagesRequest, ListMessagesResponse> listMessages,
+            IUseCaseInteractor<SendMessageRequest, SendMessageResponse> sendMessage,
+            IUseCaseInteractor<ScheduleMessageRequest, ScheduleMessageResponse> scheduleMessage,
+            IUseCaseInteractor<ModifyMessageRequest, ModifyMessageResponse> modifyMessage,
+            IUseCaseInteractor<UnscheduleMessageRequest, UnscheduleMessageResponse> unscheduleMessage
+            )
         {
-            _messageService = messageService;
+            _getMessage = getMessage;
+            _listMessages = listMessages;
+            _sendMessage = sendMessage;
+            _scheduleMessage = scheduleMessage;
+            _modifyMessage = modifyMessage;
+            _unscheduleMessage = unscheduleMessage;
         }
 
         [HttpGet]
         public IActionResult Messages()
         {
-            var messages = _messageService.Get();
-            return Ok(messages);
+            var response = _listMessages.Handle(new ListMessagesRequest());
+            return Ok(response.Messages);
         }
 
         [HttpGet("{id:length(24)}")]
         public IActionResult Message(string id)
         {
-            var message = _messageService.Get(id);
+            var request = new GetMessageRequest()
+            {
+                MessageId = id
+            };
+            var response = _getMessage.Handle(request);
+            return Ok(response.Message);
+        }
+
+        [HttpPost("send")]
+        public IActionResult Send(Message message)
+        {
+            var request = new SendMessageRequest()
+            {
+                Message = message
+            };
+            var response = _sendMessage.Handle(request);
+            // WIP
             return Ok(message);
         }
 
-        [HttpPost]
-        public IActionResult Create(Message message)
+        [HttpPost("schedule")]
+        public IActionResult Schedule(Message message)
         {
-            _messageService.Schedule(message);
-            return Ok(message);
+            var request = new ScheduleMessageRequest()
+            {
+                CommunityId = message.CommunityId,
+                DateTimeToSend = (DateTime)message.DateTimeToSend,
+                MessageContent = message.Content
+            };
+            var response = _scheduleMessage.Handle(request);
+            return Ok();
+        }
+
+        [HttpPost("{id}/unschedule")]
+        public IActionResult Unschedule(string id)
+        {
+            var request = new UnscheduleMessageRequest()
+            {
+                MessageId = id
+            };
+            var response = _unscheduleMessage.Handle(request);
+            return Ok();
         }
 
         [HttpPut]
         public IActionResult UpdateContent(UpdateContentDto dto)
         {
-            var message = _messageService
-                .UpdateContent(dto.MessageId, dto.MessageContent);
-            if (message == null)
+            // TODO: implement with use case
+            var request = new ModifyMessageRequest()
             {
-                return UnprocessableEntity("The message was already sent to the subscribers, you can't modify the content!");
-            }
-            return Ok(message);
-        }
-
-        [HttpDelete]
-        public IActionResult DeleteMessage(string messageId)
-        {
-            _messageService.Delete(messageId);
+                MessageId = dto.MessageId,
+                NewMessageContent = dto.MessageContent
+            };
+            var response = _modifyMessage.Handle(request);
             return Ok();
         }
     }

@@ -88,6 +88,7 @@ namespace Notifier
         private void SetupUseCases(IServiceCollection services)
         {
             services.AddSingleton<IUseCaseInteractor<GetMessageRequest, GetMessageResponse>, GetMessageInteractor>();
+            services.AddSingleton<IUseCaseInteractor<ListMessagesRequest, ListMessagesResponse>, ListMessagesInteractor>();
             services.AddSingleton<IUseCaseInteractor<ModifyMessageRequest, ModifyMessageResponse>, ModifyMessageInteractor>();
             services.AddSingleton<IUseCaseInteractor<RescheduleMessageRequest, RescheduleMessageResponse>, RescheduleMessageInteractor>();
             services.AddSingleton<IUseCaseInteractor<ScheduleMessageRequest, ScheduleMessageResponse>, ScheduleMessageInteractor>();
