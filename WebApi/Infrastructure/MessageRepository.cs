@@ -21,7 +21,6 @@ namespace Notifier.Infrastructure
 
         public string Delete(string id)
         {
-            var message = Get(id);
             var filter = Builders<Message>.Filter.Eq("Id", id);
             _db.Messages.DeleteOne(filter);
             return id;
