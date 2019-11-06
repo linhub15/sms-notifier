@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Notifier.Core.Dtos;
-using Notifier.Core.Interfaces;
+using Notifier.Core.UseCases;
 using Twilio.AspNet.Core;
 using Twilio.TwiML;
 
@@ -10,10 +9,14 @@ namespace Notifier.Controllers
     [ApiController]
     public class SmsController : TwilioController
     {
-        private ISubscriberService _subscriberService;
-        public SmsController(ISubscriberService subscriberService)
+        private IUseCaseInteractor<SubscribeRequest, SubscribeResponse> _subscribe;
+        private IUseCaseInteractor<UnsubscribeRequest, UnsubscribeResponse> _unsubscribe;
+        public SmsController(
+            IUseCaseInteractor<SubscribeRequest, SubscribeResponse> subscribe,
+            IUseCaseInteractor<UnsubscribeRequest, UnsubscribeResponse> unsubscribe)
         {
-            _subscriberService = subscriberService;
+            _subscribe = subscribe;
+            _unsubscribe = unsubscribe;
         }
         [HttpPost]
         public TwiMLResult Index()
@@ -21,23 +24,29 @@ namespace Notifier.Controllers
             var smsSid = Request.Form["SmsSid"];
             var fromPhoneNumber = Request.Form["From"];
             var body = Request.Form["Body"];
-            
-            var subscriber = new SubscribeDto() 
-            {
-                CommunityTag = "fmdc",
-                PhoneNumber = fromPhoneNumber
-            };
+
+            var communityId = "fmdc";
 
             var response = new MessagingResponse();
             if (body.ToString().ToLower() == "follow")
             {
-                _subscriberService.AddSubscriber(subscriber);
+                var request = new SubscribeRequest()
+                {
+                    CommunityId = communityId,
+                    PhoneNumber = fromPhoneNumber
+                };
+                _subscribe.Handle(request);
                 response.Message($"You're following 'fmdc'. \n\nText 'unfollow' to stop getting texts.");
 
             }
             else if (body.ToString().ToLower() == "unfollow")
             {
-                _subscriberService.RemoveSubscriber(subscriber);
+                var request = new UnsubscribeRequest()
+                {
+                    CommunityId = communityId,
+                    PhoneNumber = fromPhoneNumber
+                };
+                _unsubscribe.Handle(request);
                 response.Message("You've unfollowed 'fmdc'.");
             }
             else
