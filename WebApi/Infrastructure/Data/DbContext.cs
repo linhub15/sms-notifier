@@ -1,6 +1,6 @@
 using System;
 using MongoDB.Driver;
-using Notifier.Core.Models;
+using Notifier.Core.Entities;
 
 namespace Notifier.Infrastructure.Data
 {
