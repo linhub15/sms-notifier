@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Notifier.Core.Entities;
 using Notifier.Core.Interfaces;
@@ -15,6 +16,7 @@ namespace Notifier.Infrastructure
         }
         public Community Create(Community community)
         {
+            community.Id = ObjectId.GenerateNewId().ToString();
             _db.Communities.InsertOne(community);
             return community;
         }
