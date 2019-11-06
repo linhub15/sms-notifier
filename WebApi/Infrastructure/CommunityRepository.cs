@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using Notifier.Core.Entities;
 using Notifier.Core.Interfaces;
@@ -16,22 +15,22 @@ namespace Notifier.Infrastructure
         }
         public Community Create(Community community)
         {
-            community.Id = ObjectId.GenerateNewId().ToString();
             _db.Communities.InsertOne(community);
             return community;
         }
 
-        public string Delete(string id)
+        public string Delete(string tag)
         {
-            var filter = Builders<Community>.Filter.Eq("Id", id);
+            var filter = Builders<Community>.Filter.Eq("Tag", tag);
             _db.Communities.DeleteOne(filter);
-            return id;
+            return tag;
         }
 
-        public Community Get(string id)
+        public Community Get(string tag)
         {
+            var filter = Builders<Community>.Filter.Eq("Tag", tag);
             return _db.Communities
-                .Find<Community>(community => community.Id == id)
+                .Find<Community>(filter)
                 .FirstOrDefault();
         }
 
@@ -44,7 +43,7 @@ namespace Notifier.Infrastructure
 
         public Community Update(Community community)
         {
-            var filter = Builders<Community>.Filter.Eq("Id", community.Id);
+            var filter = Builders<Community>.Filter.Eq("Tag", community.Tag);
             _db.Communities.ReplaceOne(filter, community);
             return community;
         }
