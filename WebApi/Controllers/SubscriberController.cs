@@ -10,7 +10,8 @@ namespace Notifier.Controllers
     {
         private IUseCaseInteractor<SubscribeRequest, SubscribeResponse> _subscribe;
         private IUseCaseInteractor<UnsubscribeRequest, UnsubscribeResponse> _unsubscribe;
-        public SubscriberController(IUseCaseInteractor<SubscribeRequest, SubscribeResponse> subscribe,
+        public SubscriberController(
+            IUseCaseInteractor<SubscribeRequest, SubscribeResponse> subscribe,
             IUseCaseInteractor<UnsubscribeRequest, UnsubscribeResponse> unsubscribe)
         {
             _subscribe = subscribe;

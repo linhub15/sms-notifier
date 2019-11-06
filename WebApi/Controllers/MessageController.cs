@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Notifier.Core.Entities;
-using Notifier.Core.Dtos;
 using Notifier.Core.UseCases;
 using System;
 
@@ -23,8 +22,7 @@ namespace Notifier.Controllers
             IUseCaseInteractor<SendMessageRequest, SendMessageResponse> sendMessage,
             IUseCaseInteractor<ScheduleMessageRequest, ScheduleMessageResponse> scheduleMessage,
             IUseCaseInteractor<ModifyMessageRequest, ModifyMessageResponse> modifyMessage,
-            IUseCaseInteractor<UnscheduleMessageRequest, UnscheduleMessageResponse> unscheduleMessage
-            )
+            IUseCaseInteractor<UnscheduleMessageRequest, UnscheduleMessageResponse> unscheduleMessage)
         {
             _getMessage = getMessage;
             _listMessages = listMessages;
