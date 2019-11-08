@@ -4,8 +4,11 @@ using Notifier.Core.Gateways;
 
 namespace Notifier.Core.UseCases
 {
-    public class ScheduleMessageInteractor
+    public interface IScheduleMessage
         : IUseCaseInteractor<ScheduleMessageRequest, ScheduleMessageResponse>
+    {}
+
+    public class ScheduleMessageInteractor : IScheduleMessage
     {
         private ISchedulerGateway _scheduler;
         private ISmsGateway _sms;

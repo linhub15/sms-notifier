@@ -101,15 +101,15 @@ namespace Notifier
 
         private void SetupUseCases(IServiceCollection services)
         {
-            services.AddSingleton<IUseCaseInteractor<GetMessageRequest, GetMessageResponse>, GetMessageInteractor>();
-            services.AddSingleton<IUseCaseInteractor<ListMessagesRequest, ListMessagesResponse>, ListMessagesInteractor>();
-            services.AddSingleton<IUseCaseInteractor<ModifyMessageRequest, ModifyMessageResponse>, ModifyMessageInteractor>();
-            services.AddSingleton<IUseCaseInteractor<RescheduleMessageRequest, RescheduleMessageResponse>, RescheduleMessageInteractor>();
-            services.AddSingleton<IUseCaseInteractor<ScheduleMessageRequest, ScheduleMessageResponse>, ScheduleMessageInteractor>();
-            services.AddSingleton<IUseCaseInteractor<SendMessageRequest, SendMessageResponse>, SendMessageInteractor>();
-            services.AddSingleton<IUseCaseInteractor<SubscribeRequest, SubscribeResponse>, SubscribeInteractor>();
-            services.AddSingleton<IUseCaseInteractor<UnsubscribeRequest, UnsubscribeResponse>, UnsubscribeInteractor>();
-            services.AddSingleton<IUseCaseInteractor<UnscheduleMessageRequest, UnscheduleMessageResponse>, UnscheduleMessageInteractor>();
+            services.AddSingleton<IGetMessage, GetMessageInteractor>();
+            services.AddSingleton<IListMessages, ListMessagesInteractor>();
+            services.AddSingleton<IModifyMessage, ModifyMessageInteractor>();
+            services.AddSingleton<IRescheduleMessage, RescheduleMessageInteractor>();
+            services.AddSingleton<IScheduleMessage, ScheduleMessageInteractor>();
+            services.AddSingleton<ISendMessage, SendMessageInteractor>();
+            services.AddSingleton<ISubscribe, SubscribeInteractor>();
+            services.AddSingleton<IUnsubscribe, UnsubscribeInteractor>();
+            services.AddSingleton<IUnscheduleMessage, UnscheduleMessageInteractor>();
         }
     }
 }

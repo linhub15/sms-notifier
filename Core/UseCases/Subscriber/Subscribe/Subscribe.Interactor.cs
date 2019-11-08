@@ -3,8 +3,11 @@ using Notifier.Core.Gateways;
 
 namespace Notifier.Core.UseCases
 {
-    public class SubscribeInteractor
+    public interface ISubscribe
         : IUseCaseInteractor<SubscribeRequest, SubscribeResponse>
+    {}
+
+    public class SubscribeInteractor : ISubscribe
     {
         IRepositoryGateway<string, Community> _communities;
         public SubscribeInteractor(IRepositoryGateway<string, Community> repository)

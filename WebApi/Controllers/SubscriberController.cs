@@ -8,11 +8,11 @@ namespace Notifier.Controllers
     [ApiController]
     public class SubscriberController : ControllerBase
     {
-        private IUseCaseInteractor<SubscribeRequest, SubscribeResponse> _subscribe;
-        private IUseCaseInteractor<UnsubscribeRequest, UnsubscribeResponse> _unsubscribe;
+        private ISubscribe _subscribe;
+        private IUnsubscribe _unsubscribe;
         public SubscriberController(
-            IUseCaseInteractor<SubscribeRequest, SubscribeResponse> subscribe,
-            IUseCaseInteractor<UnsubscribeRequest, UnsubscribeResponse> unsubscribe)
+            ISubscribe subscribe,
+            IUnsubscribe unsubscribe)
         {
             _subscribe = subscribe;
             _unsubscribe = unsubscribe;

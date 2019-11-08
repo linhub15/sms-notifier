@@ -9,20 +9,20 @@ namespace Notifier.Controllers
     [ApiController]
     public class MessageController : ControllerBase
     {
-        private IUseCaseInteractor<GetMessageRequest, GetMessageResponse> _getMessage;
-        private IUseCaseInteractor<ListMessagesRequest, ListMessagesResponse> _listMessages;
-        private IUseCaseInteractor<SendMessageRequest, SendMessageResponse> _sendMessage;
-        private IUseCaseInteractor<ScheduleMessageRequest, ScheduleMessageResponse> _scheduleMessage;
-        private IUseCaseInteractor<ModifyMessageRequest, ModifyMessageResponse> _modifyMessage;
-        private IUseCaseInteractor<UnscheduleMessageRequest, UnscheduleMessageResponse> _unscheduleMessage;
+        private IGetMessage _getMessage;
+        private IListMessages _listMessages;
+        private ISendMessage _sendMessage;
+        private IScheduleMessage _scheduleMessage;
+        private IModifyMessage _modifyMessage;
+        private IUnscheduleMessage _unscheduleMessage;
 
         public MessageController(
-            IUseCaseInteractor<GetMessageRequest, GetMessageResponse> getMessage,
-            IUseCaseInteractor<ListMessagesRequest, ListMessagesResponse> listMessages,
-            IUseCaseInteractor<SendMessageRequest, SendMessageResponse> sendMessage,
-            IUseCaseInteractor<ScheduleMessageRequest, ScheduleMessageResponse> scheduleMessage,
-            IUseCaseInteractor<ModifyMessageRequest, ModifyMessageResponse> modifyMessage,
-            IUseCaseInteractor<UnscheduleMessageRequest, UnscheduleMessageResponse> unscheduleMessage)
+            IGetMessage getMessage,
+            IListMessages listMessages,
+            ISendMessage sendMessage,
+            IScheduleMessage scheduleMessage,
+            IModifyMessage modifyMessage,
+            IUnscheduleMessage unscheduleMessage)
         {
             _getMessage = getMessage;
             _listMessages = listMessages;

@@ -4,8 +4,11 @@ using Notifier.Core.Gateways;
 
 namespace Notifier.Core.UseCases
 {
-    public class SendMessageInteractor
+    public interface ISendMessage
         : IUseCaseInteractor<SendMessageRequest, SendMessageResponse>
+    {}
+
+    public class SendMessageInteractor : ISendMessage
     {
         private ISmsGateway _sms;
         private IRepositoryGateway<string, Message> _messages;

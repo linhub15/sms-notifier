@@ -3,8 +3,11 @@ using Notifier.Core.Gateways;
 
 namespace Notifier.Core.UseCases
 {
-    public class ModifyMessageInteractor
+    public interface IModifyMessage
         : IUseCaseInteractor<ModifyMessageRequest, ModifyMessageResponse>
+    {}
+    
+    public class ModifyMessageInteractor : IModifyMessage
     {
         private IRepositoryGateway<string, Message> _messages;
         public ModifyMessageInteractor(IRepositoryGateway<string, Message> repository)

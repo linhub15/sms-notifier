@@ -3,8 +3,11 @@ using Notifier.Core.Gateways;
 
 namespace Notifier.Core.UseCases
 {
-    public class UnscheduleMessageInteractor
-        : IUseCaseInteractor<UnscheduleMessageRequest, UnscheduleMessageResponse>
+    public interface IUnscheduleMessage
+       : IUseCaseInteractor<UnscheduleMessageRequest, UnscheduleMessageResponse>
+    {}
+
+    public class UnscheduleMessageInteractor : IUnscheduleMessage
     {
         private ISchedulerGateway _scheduler;
         private IRepositoryGateway<string, Message> _messages;

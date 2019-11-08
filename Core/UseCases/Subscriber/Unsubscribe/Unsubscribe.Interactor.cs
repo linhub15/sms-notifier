@@ -3,8 +3,11 @@ using Notifier.Core.Gateways;
 
 namespace Notifier.Core.UseCases
 {
-    public class UnsubscribeInteractor
+    public interface IUnsubscribe
         : IUseCaseInteractor<UnsubscribeRequest, UnsubscribeResponse>
+    {}
+
+    public class UnsubscribeInteractor : IUnsubscribe
     {
         IRepositoryGateway<string, Community> _communities;
         public UnsubscribeInteractor(IRepositoryGateway<string, Community> repository)

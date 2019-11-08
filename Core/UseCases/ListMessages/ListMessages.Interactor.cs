@@ -3,8 +3,10 @@ using Notifier.Core.Gateways;
 
 namespace Notifier.Core.UseCases
 {
-    public class ListMessagesInteractor
+    public interface IListMessages
         : IUseCaseInteractor<ListMessagesRequest, ListMessagesResponse>
+    {}
+    public class ListMessagesInteractor : IListMessages
     {
         IRepositoryGateway<string, Message> _messages;
         public ListMessagesInteractor(IRepositoryGateway<string, Message> messages)
