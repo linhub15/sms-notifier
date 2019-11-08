@@ -16,7 +16,7 @@ namespace Core.Tests
         }
 
         [Fact]
-        public void Test1()
+        public void get_message_by_id()
         {
             // Given
             var message = new Message()
