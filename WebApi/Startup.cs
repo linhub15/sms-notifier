@@ -49,14 +49,16 @@ namespace Notifier
             services.AddSingleton<IRepositoryGateway<string, Message>, MessageRepository>();
             services.AddSingleton<IRepositoryGateway<string, Community>, CommunityRepository>();
 
-            SetupUseCases(services);
+            UseCaseInjection(services);
 
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            // Swagger
+            services.AddSwaggerDocument();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Notifier Api", Version = "v1" });
             });
 
             // Hangfire services
@@ -92,14 +94,11 @@ namespace Notifier
 
             app.UseHttpsRedirection();
             app.UseMvc();
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Notifier-Api");
-            });
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
         }
 
-        private void SetupUseCases(IServiceCollection services)
+        private void UseCaseInjection(IServiceCollection services)
         {
             services.AddSingleton<IGetMessage, GetMessageInteractor>();
             services.AddSingleton<IListMessages, ListMessagesInteractor>();
